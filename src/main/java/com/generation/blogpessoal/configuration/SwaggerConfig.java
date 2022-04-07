@@ -13,46 +13,31 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
 /**
- * A Anotação (Annotation) @Configuration indica que a classe é uma fonte
- * de configuração e definição de Beans.
+ * A Anotação (Annotation) @Configuration indica que a classe é uma fonte de
+ * configuração e definição de Beans.
  * 
  */
 @Configuration
 public class SwaggerConfig {
 
-    /**
-     * A Anotação @Bean indica que o método é um bean, ou seja, um objeto que pode ser
-     * injetado em qualquer ponto da sua aplicação.
-     */
 	@Bean
-	public OpenAPI springBlogPessoalOpenAPI() {
-		
-        /** Cria um Objeto da Classe OpenAPI, que gera a documentação no Swagger utilizando 
-         * a especificação OpenAPI.
-         * 
-         */
-        return new OpenAPI()
-				.info(new Info()
-					.title("Projeto Blog Pessoal")
-					.description("Projeto Blog Pessoal - Generation Brasil")
-					.version("v0.0.1")
-				.license(new License()
-					.name("Generation Brasil")
-					.url("https://brazil.generation.org/"))
-				.contact(new Contact()
-					.name("Conteudo Generation")
-					.url("https://github.com/conteudoGeneration")
-					.email("conteudogeneration@gmail.com")))
-				.externalDocs(new ExternalDocumentation()
-					.description("Github")
-					.url("https://github.com/conteudoGeneration/"));
+	public OpenAPI springShopOpenAPI() {
+		Contact contato = new Contact();
+
+		contato.setEmail("marcelo.barboza@generation.org");
+		contato.setName("Marcelo Barboza");
+		contato.setUrl("https://github.com/Marcelo7211");
+		contato.addExtension("Area", "C&I (Especialista tecnico Generation Brasil)");
+		contato.addExtension("Telefone", "+55 13 99125-1961");
+
+		return new OpenAPI()
+				.info(new Info().title("Blog Mobile")
+						.description("API para gerenciar dados do projeto integrador mobile").version("v0.0.1")
+						.contact(contato).license(new License().name("Generation.org").url("generationbrazil.org")))
+				.externalDocs(new ExternalDocumentation().description("Marcelo Barboza")
+						.url("marcelo.barboza@generation.org"));
 	}
 
-    /**
-     * A Classe OpenApiCustomiser permite personalizar o Swagger, baseado na 
-     * Especificação OpenAPI. O Método abaixo, personaliza todas as mensagens 
-     * HTTP Responses (Respostas das requisições) do Swagger.
-     */
 	@Bean
 	public OpenApiCustomiser customerGlobalHeaderOpenApiCustomiser() {
 
@@ -73,13 +58,14 @@ public class SwaggerConfig {
 		};
 	}
 
-    /**
-     * O Método createApiResponse() adiciona uma descrição (Mensagem), em cada Resposta HTTP.
-     */
+	/**
+	 * O Método createApiResponse() adiciona uma descrição (Mensagem), em cada
+	 * Resposta HTTP.
+	 */
 	private ApiResponse createApiResponse(String message) {
 
 		return new ApiResponse().description(message);
 
 	}
-	
+
 }
